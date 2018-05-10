@@ -4,12 +4,14 @@ sap.ui.define([
 	"sap/ui/core/Fragment",
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
-	"sap/ui/model/json/JSONModel"
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/vk/ContentResource"
 ], function(jQuery, MessageToast, Fragment, Controller, Filter, JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.gv.hackathon.Hackathon5.controller.WorkOrders", {
 		_safetyCheck: false,
+		_viewerContentResource: null,
 		onInit: function() {
 			this._woModel = new sap.ui.model.json.JSONModel("mockData/WOmasterList.json");
 			this._woModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
@@ -50,6 +52,7 @@ sap.ui.define([
 			this._mModel.setData(aMessages);
 			this._oMessagePopover.setModel(this._mModel);
 
+			this.byId("viewer").setVisible(false);
 			this.manageDetailToolbar("None");
 		},
 
@@ -63,15 +66,23 @@ sap.ui.define([
 			taskTab.bindElement(sPath);
 			var componentsTab = this.byId("componentsTable");
 			componentsTab.bindElement(sPath);
-			//var oTemplate = this.byId("oTemplate");
-			//taskTab.bindItems({path: sPath+"/Operations", template: oTemplate});
+
+			var viewer = this.byId("viewer");
+			viewer.destroyContentResources();
 
 			if (sPath !== "") {
 				var status = this._woModel.getProperty(sPath).Status;
-
 				this.manageDetailToolbar(status);
+				var vdsFile = this._woModel.getProperty(sPath).Vds;
+				this.manageViewer(vdsFile);
 			} else {
+				this._viewerContentResource = null;
 				this.manageDetailToolbar("None");
+			}
+
+			var key = this.byId("iconTabBar").getSelectedKey();
+			if (key === "viewer") {
+				this.loadModelIntoViewer();
 			}
 		},
 
@@ -157,6 +168,36 @@ sap.ui.define([
 				this.getView().byId("startButton").setVisible(false);
 				this.getView().byId("forwardButton").setVisible(false);
 
+			}
+		},
+
+		manageViewer: function(file) {
+			if (file !== "") {
+				this.byId("viewer").setVisible(true);
+				this.byId("vdsMessageStrip").setVisible(false);
+				this._viewerContentResource = new sap.ui.vk.ContentResource({
+					source: "mockData/vds/" + file,
+					sourceType: "vds",
+					sourceId: "abc"
+
+				});
+			} else {
+				this._viewerContentResource = null;
+				this.byId("viewer").setVisible(false);
+				this.byId("vdsMessageStrip").setVisible(true);
+			}
+		},
+
+		onTabSelectChanged: function(oEvent) {
+			var key = oEvent.getParameters().key;
+			if (key === "viewer") {
+				this.loadModelIntoViewer();
+			}
+		},
+
+		loadModelIntoViewer: function() {
+			if (this._viewerContentResource) {
+				this.byId("viewer").addContentResource(this._viewerContentResource);
 			}
 		}
 

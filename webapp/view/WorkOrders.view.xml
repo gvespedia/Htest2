@@ -17,9 +17,9 @@
 							<ObjectAttribute text="Expected Start Date: {ExpectedStartDate}"/>
 						</attributes>
 					</ObjectHeader>
-					<IconTabBar id="idIconTabBarSeparatorNoIcon" expanded="false" class="sapUiResponsiveContentPadding">
+					<IconTabBar id="iconTabBar" expanded="false" class="sapUiResponsiveContentPadding">
 						<items>
-							<IconTabFilter icon="sap-icon://hint" text="Info">
+							<IconTabFilter key="info" icon="sap-icon://hint" text="Info">
 								<VBox>
 									<f:Form id="infoForm" editable="false">
 										<f:title>
@@ -74,7 +74,7 @@
 								</VBox>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter icon="sap-icon://task" text="Tasks">
+							<IconTabFilter key="tasks" icon="sap-icon://task" text="Tasks">
 								<Table id="operationsTable" inset="false" items="{ path: 'Operations' }">
 									<headerToolbar>
 										<Toolbar>
@@ -110,7 +110,7 @@
 								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter icon="sap-icon://wrench" text="Components">
+							<IconTabFilter key="components" icon="sap-icon://wrench" text="Components">
 								<Table id="componentsTable" inset="false" items="{ path: 'Components' }">
 									<headerToolbar>
 										<Toolbar>
@@ -146,12 +146,13 @@
 								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter icon="sap-icon://machine" text="Equipment">
-								<Text text="People content goes here ..."/>
+							<IconTabFilter key="equipment" icon="sap-icon://machine" text="Equipment">
+								<Text text="Network content goes here ..."/>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter icon="sap-icon://attachment" text="Attachments">
-								<vk:Viewer id="viewer" toolbarTitle="{i18n>viewerToolbarTitle}" width="100%" height="85%"></vk:Viewer>
+							<IconTabFilter key="viewer" icon="sap-icon://attachment" text="Attachment">
+								<MessageStrip id="vdsMessageStrip" text="No vds file available for this equipment" type="Information" showIcon="true" />
+								<vk:Viewer id="viewer" toolbarTitle="3D Viewer" width="100%" height="600px" ></vk:Viewer>
 							</IconTabFilter>
 						</items>
 					</IconTabBar>

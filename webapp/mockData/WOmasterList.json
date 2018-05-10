@@ -2,6 +2,7 @@
 	"WorkOrders": [{
 			"Id": "Test1",
 			"Equipment": "201937",
+			"Vds": "9310122982.vds",
 			"Priority": "Medium",
 			"RequestDate": "05/07/2018",
 			"Type": "Repair",
@@ -40,6 +41,7 @@
 		}, {
 			"Id": "Test2",
 			"Equipment": "789656",
+			"Vds": "",
 			"Priority": "High",
 			"RequestDate": "02/07/2018",
 			"Type": "Check",
@@ -72,6 +74,7 @@
 		}, {
 			"Id": "Ord3",
 			"Equipment": "789656",
+			"Vds": "",
 			"Priority": "Low",
 			"RequestDate": "21/04/2018",
 			"Type": "Maintenance",
@@ -85,6 +88,7 @@
 		}, {
 			"Id": "Ord4",
 			"Equipment": "789656",
+			"Vds": "10000003737.vds",
 			"Priority": "Low",
 			"RequestDate": "21/04/2018",
 			"Type": "Maintenance",
