@@ -1,0 +1,129 @@
+<mvc:View controllerName="com.gv.hackathon.Hackathon5.controller.WorkOrders" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true"
+	xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:vk="sap.ui.vk" xmlns:core="sap.ui.core">
+	<SplitApp id="SplitAppContainer" initialDetail="detail" initialMaster="master" orientationChange="onOrientationChange">
+		<detailPages>
+			<Page id="detail" title="Details" class="sapUiStdPage">
+				<headerContent>
+					<Button icon="sap-icon://message-popup" text="1" type="Emphasized"
+						press="handleMessagePopoverPress"/>
+				</headerContent>
+				<content>
+					<ObjectHeader id="orderHeader" icon="sap-icon://machine" iconDensityAware="false" iconAlt="{Id}" title="{Id}" number="{Equipment}">
+						<statuses>
+							<ObjectStatus text="Priority: { path: 'Priority' }" state="{ path: 'Priority', formatter: '.priorityFormatter' }"/>
+						</statuses>
+						<attributes>
+							<ObjectAttribute text="Requested By: {RequestedBy}"/>
+							<ObjectAttribute text="Expected Start Date: {ExpectedStartDate}"/>
+						</attributes>
+					</ObjectHeader>
+					<IconTabBar id="idIconTabBarSeparatorNoIcon" expanded="false" class="sapUiResponsiveContentPadding">
+						<items>
+							<IconTabFilter icon="sap-icon://hint" text="Info">
+								<VBox>
+									<f:Form id="infoForm" editable="false">
+										<f:title>
+											<core:Title text="Info"/>
+										</f:title>
+										<f:layout>
+											<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
+												emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+										</f:layout>
+										<f:formContainers>
+											<f:FormContainer>
+												<f:formElements>
+													<f:FormElement label="Requested by">
+														<f:fields>
+															<Text text="{RequestedBy}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Requested date">
+														<f:fields>
+															<Text text="{RequestDate}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Expected start date">
+														<f:fields>
+															<Text text="{ExpectedStartDate}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Expected conclusion date">
+														<f:fields>
+															<Text text="{ExpectedEndDate}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Work center">
+														<f:fields>
+															<Text text="{WorkCntr}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Status">
+														<f:fields>
+															<Text text="{Status}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Root cause">
+														<f:fields>
+															<Text text="{RootCause}"/>
+														</f:fields>
+													</f:FormElement>
+												</f:formElements>
+											</f:FormContainer>
+										</f:formContainers>
+									</f:Form>
+								</VBox>
+							</IconTabFilter>
+							<IconTabSeparator icon=""/>
+							<IconTabFilter icon="sap-icon://task" text="Tasks">
+								<Text text="Attachments go here ..."/>
+							</IconTabFilter>
+							<IconTabSeparator icon=""/>
+							<IconTabFilter icon="sap-icon://wrench" text="Components">
+								<Text text="Notes go here ..."/>
+							</IconTabFilter>
+							<IconTabSeparator icon=""/>
+							<IconTabFilter icon="sap-icon://machine" text="Equipment">
+								<Text text="People content goes here ..."/>
+							</IconTabFilter>
+							<IconTabSeparator icon=""/>
+							<IconTabFilter icon="sap-icon://attachment" text="Attachments">
+								<vk:Viewer id="viewer" toolbarTitle="{i18n>viewerToolbarTitle}" width="100%" height="85%"></vk:Viewer>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button text="Start" type="Accept" press="onStart" />
+						<Button text="Forward"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page id="master" title="Work Orders" class="sapUiStdPage" showNavButton="true" navButtonPress="onBackToAuthorization">
+				<content>
+					<List id="masterList" items="{/WorkOrders}" mode="SingleSelectMaster" selectionChange="onListSelectionChange">
+						<items>
+							<ObjectListItem title="{Id}" number="{Equipment}">
+								<firstStatus>
+									<ObjectStatus text="{ path: 'Priority' }" state="{ path: 'Priority', formatter: '.priorityFormatter' }"/>
+								</firstStatus>
+								<attributes>
+									<ObjectAttribute text="{RequestDate}"/>
+									<ObjectAttribute text="Type: {Type}"/>
+								</attributes>
+							</ObjectListItem>
+						</items>
+					</List>
+				</content>
+				<footer>
+					<Toolbar>
+					</Toolbar>
+				</footer>
+			</Page>
+		</masterPages>
+	</SplitApp>
+</mvc:View>
