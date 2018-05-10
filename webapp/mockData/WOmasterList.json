@@ -10,7 +10,23 @@
 			"ExpectedEndDate": "12/08/2018",
 			"WorkCntr": "WA410",
 			"Status": "In Progress",
-			"RootCause": "Overdue maintenance"
+			"RootCause": "Overdue maintenance",
+			"Operations": [
+				{
+				"Activity": "0010",
+				"Description": "Register valves",
+				"EstimatedHours": "1",
+				"ActualHours": "_",
+				"OperationStatus": "Pending"
+			},
+			{
+				"Activity": "0020",
+				"Description": "Test seals",
+				"EstimatedHours": "1",
+				"ActualHours": "_",
+				"OperationStatus": "Pending"
+			}
+			]
 		}, {
 			"Id": "Test2",
 			"Equipment": "789656",
@@ -22,7 +38,23 @@
 			"ExpectedEndDate": "04/08/2018",
 			"WorkCntr": "WA410",
 			"Status": "In Progress",
-			"RootCause": "Critical failure"
+			"RootCause": "Critical failure",
+			"Operations": [
+				{
+				"Activity": "0010",
+				"Description": "Remove faulty component",
+				"EstimatedHours": "5",
+				"ActualHours": "_",
+				"OperationStatus": "Pending"
+			},
+			{
+				"Activity": "0020",
+				"Description": "Substitute pressure seal",
+				"EstimatedHours": "2",
+				"ActualHours": "_",
+				"OperationStatus": "Pending"
+			}
+			]
 		}, {
 			"Id": "Ord3",
 			"Equipment": "789656",
@@ -34,7 +66,8 @@
 			"ExpectedEndDate": "22/05/2018",
 			"WorkCntr": "WA410",
 			"Status": "Open",
-			"RootCause": "Wear and tear"
+			"RootCause": "Wear and tear",
+			"Operations": []
 		}, {
 			"Id": "Ord4",
 			"Equipment": "789656",
@@ -46,7 +79,8 @@
 			"ExpectedEndDate": "12/05/2018",
 			"WorkCntr": "WA410",
 			"Status": "Open",
-			"RootCause": "Planned maintenance"
+			"RootCause": "Planned maintenance",
+			"Operations": []
 		}
 
 	]

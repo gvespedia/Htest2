@@ -5,8 +5,7 @@
 		<detailPages>
 			<Page id="detail" title="Details" class="sapUiStdPage">
 				<headerContent>
-					<Button id="popoverButton" icon="sap-icon://message-popup" text="1" type="Emphasized"
-						press="handleMessagePopoverPress"/>
+					<Button id="popoverButton" icon="sap-icon://message-popup" text="1" type="Emphasized" press="handleMessagePopoverPress"/>
 				</headerContent>
 				<content>
 					<ObjectHeader id="orderHeader" icon="sap-icon://machine" iconDensityAware="false" iconAlt="{Id}" title="{Id}" number="{Equipment}">
@@ -76,7 +75,39 @@
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter icon="sap-icon://task" text="Tasks">
-								<Text text="Attachments go here ..."/>
+								<Table id="operationsTable" inset="false" items="{ path: 'Operations' }">
+									<headerToolbar>
+										<Toolbar>
+											<content>
+												<Title text="Operations" level="H2"/>
+											</content>
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column minScreenWidth="Tablet" demandPopin="true">
+											<Text text="Operation"/>
+										</Column>
+										<Column minScreenWidth="Desktop" demandPopin="true">
+											<Text text="Est. H"/>
+										</Column>
+										<Column minScreenWidth="Desktop" demandPopin="true">
+											<Text text="Act. H"/>
+										</Column>
+										<Column>
+											<Text text="Status"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{Description}" text="{Activity}"/>
+												<Text text="{EstimatedHours}"/>
+												<Text text="{ActualHours}"/>
+												<Text text="{OperationStatus}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter icon="sap-icon://wrench" text="Components">
@@ -94,16 +125,18 @@
 					</IconTabBar>
 				</content>
 				<footer>
-					<Toolbar>
+					<Toolbar id="detailFooterToolbar">
 						<ToolbarSpacer/>
-						<Button text="Start" type="Accept" press="onStart" />
-						<Button text="Forward"/>
+						<Button id="startButton" text="Start" type="Accept" press="onStart"/>
+						<Button id="forwardButton" text="Forward" press="onForward"/>
+						<Button id="holdButton" text="Hold" press="onHold"/>
+						<Button id="closeButton" text="Close" press="onClose"/>
 					</Toolbar>
 				</footer>
 			</Page>
 		</detailPages>
 		<masterPages>
-			<Page id="master" title="Work Orders" class="sapUiStdPage" showNavButton="true" navButtonPress="onBackToAuthorization">
+			<Page id="master" title="Work Orders" class="sapUiStdPage">
 				<content>
 					<List id="masterList" items="{/WorkOrders}" mode="SingleSelectMaster" selectionChange="onListSelectionChange">
 						<items>
@@ -114,14 +147,14 @@
 								<attributes>
 									<ObjectAttribute text="{RequestDate}"/>
 									<ObjectAttribute text="Type: {Type}"/>
+									<ObjectAttribute text="Status: {Status}"/>
 								</attributes>
 							</ObjectListItem>
 						</items>
 					</List>
 				</content>
 				<footer>
-					<Toolbar>
-					</Toolbar>
+					<Toolbar></Toolbar>
 				</footer>
 			</Page>
 		</masterPages>

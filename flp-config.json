@@ -1,0 +1,34 @@
+{
+    "application": {
+        "id": "",
+        "title": "com.gv.hackathon.Hackathon5.Hackathon5",
+        "type": "SAP_UI5_Component",
+        "componentUrl": "/",
+        "appUrl": "#Hackathon5-Display",
+        "navigationComponentName": "com.gv.hackathon.Hackathon5",
+        "intentSemanticObject": "Hackathon5",
+        "intentAction": "Display",
+        "html5ApplicationName": "hackathon5",
+        "HCPParentApplicationName": ""
+    },
+    "assignment": {
+        "groups": [
+            "a0a592c7-5c5f-4ef5-a857-c411fab2d719"
+        ],
+        "contentPackages": [
+            "7cb1ceee-c9f5-4e66-8879-f2ed51ef36af"
+        ],
+        "categories": []
+    },
+    "tile": {
+        "type": "StaticTile",
+        "title": "Hackathon5",
+        "subtitle": "Subtitle",
+        "searchKeywords": "Hackathon5,Subtitle",
+        "displayIconUrl": "sap-icon://approvals",
+        "displayInfoText": "",
+        "size": "1x1",
+        "serviceURL": "",
+        "refreshInterval": ""
+    }
+}

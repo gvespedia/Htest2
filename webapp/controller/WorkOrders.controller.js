@@ -50,6 +50,7 @@ sap.ui.define([
 			this._mModel.setData(aMessages);
 			this._oMessagePopover.setModel(this._mModel);
 
+			this.manageDetailToolbar("None");
 		},
 
 		onListSelectionChange: function(oEvent) {
@@ -58,6 +59,18 @@ sap.ui.define([
 			header.bindElement(sPath);
 			var infoForm = this.byId("infoForm");
 			infoForm.bindElement(sPath);
+			var taskTab = this.byId("operationsTable");
+			taskTab.bindElement(sPath);
+			//var oTemplate = this.byId("oTemplate");
+			//taskTab.bindItems({path: sPath+"/Operations", template: oTemplate});
+
+			if (sPath !== "") {
+				var status = this._woModel.getProperty(sPath).Status;
+
+				this.manageDetailToolbar(status);
+			} else {
+				this.manageDetailToolbar("None");
+			}
 		},
 
 		priorityFormatter: function(prior) {
@@ -108,6 +121,40 @@ sap.ui.define([
 				);
 			} else {
 				sap.m.MessageToast.show("Order started");
+				this.manageDetailToolbar("In Progress");
+			}
+		},
+
+		onForward: function() {
+			sap.m.MessageToast.show("Order forwarded");
+			this.manageDetailToolbar("In Progress");
+		},
+
+		onHold: function() {
+			sap.m.MessageToast.show("Order on hold");
+		},
+
+		onClose: function() {
+			sap.m.MessageToast.show("Order closed");
+		},
+
+		manageDetailToolbar: function(status) {
+			if (status === "In Progress") {
+				this.getView().byId("holdButton").setVisible(true);
+				this.getView().byId("closeButton").setVisible(true);
+				this.getView().byId("startButton").setVisible(false);
+				this.getView().byId("forwardButton").setVisible(false);
+			} else if (status === "Open") {
+				this.getView().byId("holdButton").setVisible(false);
+				this.getView().byId("closeButton").setVisible(false);
+				this.getView().byId("startButton").setVisible(true);
+				this.getView().byId("forwardButton").setVisible(true);
+			} else if (status === "None") {
+				this.getView().byId("holdButton").setVisible(false);
+				this.getView().byId("closeButton").setVisible(false);
+				this.getView().byId("startButton").setVisible(false);
+				this.getView().byId("forwardButton").setVisible(false);
+
 			}
 		}
 
