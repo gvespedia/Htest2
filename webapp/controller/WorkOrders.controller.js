@@ -18,10 +18,21 @@ sap.ui.define([
 		_safetyCheck: false,
 		_viewerContentResource: null,
 		STARTING_PROFILE: "9878787",
+
 		onInit: function() {
+
+			///////////////////////////
+			//  Setup WorkOrders model
+
 			this._woModel = new sap.ui.model.json.JSONModel("mockData/WOmasterList.json");
 			this._woModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 			this.getView().setModel(this._woModel);
+
+			//  END Setup WorkOrders model
+			///////////////////////////
+
+			///////////////////////////
+			//  Manage Safety Equipment Message
 
 			var oLink = new sap.m.Link({
 				text: "Perform safety measures check",
@@ -58,21 +69,25 @@ sap.ui.define([
 			this._mModel.setData(aMessages);
 			this._oMessagePopover.setModel(this._mModel);
 
+			//  END Manage Safety Equipment Message
+			///////////////////////////
+
+			///////////////////////////
+			//  Manage Visibility
+
 			this.byId("viewer").setVisible(false);
 			this.manageDetailToolbar("None");
 
+			//  END Manage Visibility
+			///////////////////////////
+
 			///////////////////////////
 			// Setup for NetworkGraph
-			///////////////////////////
-			this._oModel = new sap.ui.model.json.JSONModel("mockData/graph.json");
-			this._oModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+			this.byId("graph").setVisible(false);
 
 			this._sTopParent = this.STARTING_PROFILE;
 			this._mExplored = [this._sTopParent];
-
-			this._graph = this.getView().byId("graph").setModel(this._oModel);
-
-			this._setFilter();
+this._graph = this.getView().byId("graph");
 
 			this._graph.attachEvent("beforeLayouting", function(oEvent) {
 				// nodes are not rendered yet (bOutput === false) so their invalidation triggers parent (graph) invalidation
@@ -148,7 +163,13 @@ sap.ui.define([
 				}, this);
 				this._graph.preventInvalidation(false);
 			}.bind(this));
+
+			// End Setup for NetworkGraph
+			///////////////////////////
 		},
+
+		///////////////////////////
+		//  Work Orders Master List
 
 		onListSelectionChange: function(oEvent) {
 			var sPath = oEvent.getParameter("listItem").getBindingContext().sPath;
@@ -169,6 +190,8 @@ sap.ui.define([
 				this.manageDetailToolbar(status);
 				var vdsFile = this._woModel.getProperty(sPath).Vds;
 				this.manageViewer(vdsFile);
+				var graph = this._woModel.getProperty(sPath).Graph;
+				this.manageNetworkGraph(graph);
 			} else {
 				this._viewerContentResource = null;
 				this.manageDetailToolbar("None");
@@ -196,6 +219,12 @@ sap.ui.define([
 			}
 		},
 
+		//  END Work Orders Master List
+		///////////////////////////
+
+		///////////////////////////
+		//  Manage Safety Check Message
+
 		handleMessagePopoverPress: function(oEvent) {
 			this._oMessagePopover.toggle(oEvent.getSource());
 		},
@@ -208,6 +237,12 @@ sap.ui.define([
 			this.getView().byId("popoverButton").setVisible(false);
 			sap.m.MessageToast.show("Safety measures check successful");
 		},
+
+		//  END Manage Safety Check Message
+		///////////////////////////
+
+		///////////////////////////
+		//  Toolbar and Toolbar Buttons
 
 		onStart: function() {
 			var selItem = this.getView().byId("masterList").getSelectedItems();
@@ -265,6 +300,12 @@ sap.ui.define([
 			}
 		},
 
+		//  END Toolbar and Toolbar Buttons
+		///////////////////////////
+
+		///////////////////////////
+		//	3D Viewer
+
 		manageViewer: function(file) {
 			if (file !== "") {
 				this.byId("viewer").setVisible(true);
@@ -292,6 +333,27 @@ sap.ui.define([
 		loadModelIntoViewer: function() {
 			if (this._viewerContentResource) {
 				this.byId("viewer").addContentResource(this._viewerContentResource);
+			}
+		},
+
+		//	END 3D Viewer
+		///////////////////////////
+
+		///////////////////////////
+		//	Network Graph 
+
+		manageNetworkGraph: function(name) {
+			debugger;
+			if (name.length > 0) {
+				this.byId("graph").setVisible(true);
+				this.byId("graphMessageStrip").setVisible(false);
+				this._oModel = new sap.ui.model.json.JSONModel("mockData/" + name);
+				this._oModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+				this._graph.setModel(this._oModel);
+				this._setFilter();
+			} else {
+				this.byId("graph").setVisible(false);
+				this.byId("graphMessageStrip").setVisible(true);
 			}
 		},
 
@@ -408,6 +470,9 @@ sap.ui.define([
 		linePress: function(oEvent) {
 			oEvent.bPreventDefault = true;
 		}
+
+		//	END Network Graph 
+		///////////////////////////
 
 	});
 });

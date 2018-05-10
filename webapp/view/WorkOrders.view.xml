@@ -148,6 +148,7 @@
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter key="equipment" icon="sap-icon://machine" text="Equipment">
+								<MessageStrip id="graphMessageStrip" text="No graph file available for this equipment" type="Information" showIcon="true"/>
 								<ng:Graph orientation="TopBottom" id="graph" layout="Layered" searchSuggest="suggest" search="search" nodes="{/nodes}" lines="{/lines}">
 									<ng:layoutAlgorithm>
 										<layout:LayeredLayout mergeEdges="true" nodePlacement="Simple" nodeSpacing="40"/>
