@@ -61,6 +61,8 @@ sap.ui.define([
 			infoForm.bindElement(sPath);
 			var taskTab = this.byId("operationsTable");
 			taskTab.bindElement(sPath);
+			var componentsTab = this.byId("componentsTable");
+			componentsTab.bindElement(sPath);
 			//var oTemplate = this.byId("oTemplate");
 			//taskTab.bindItems({path: sPath+"/Operations", template: oTemplate});
 

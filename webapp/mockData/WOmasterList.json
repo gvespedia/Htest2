@@ -11,22 +11,32 @@
 			"WorkCntr": "WA410",
 			"Status": "In Progress",
 			"RootCause": "Overdue maintenance",
-			"Operations": [
-				{
+			"Operations": [{
 				"Activity": "0010",
 				"Description": "Register valves",
 				"EstimatedHours": "1",
 				"ActualHours": "_",
 				"OperationStatus": "Pending"
-			},
-			{
+			}, {
 				"Activity": "0020",
 				"Description": "Test seals",
 				"EstimatedHours": "1",
 				"ActualHours": "_",
 				"OperationStatus": "Pending"
-			}
-			]
+			}],
+			"Components": [{
+				"Matnr": "12352MMAN",
+				"Description": "Socket n°13",
+				"ReqQty": "14",
+				"StockQty": "132",
+				"UsedQty": ""
+			}, {
+				"Matnr": "SIL54",
+				"Description": "Silicone Seal D32",
+				"ReqQty": "3",
+				"StockQty": "40",
+				"UsedQty": ""
+			}]
 		}, {
 			"Id": "Test2",
 			"Equipment": "789656",
@@ -39,22 +49,26 @@
 			"WorkCntr": "WA410",
 			"Status": "In Progress",
 			"RootCause": "Critical failure",
-			"Operations": [
-				{
+			"Operations": [{
 				"Activity": "0010",
 				"Description": "Remove faulty component",
 				"EstimatedHours": "5",
 				"ActualHours": "_",
 				"OperationStatus": "Pending"
-			},
-			{
+			}, {
 				"Activity": "0020",
 				"Description": "Substitute pressure seal",
 				"EstimatedHours": "2",
 				"ActualHours": "_",
 				"OperationStatus": "Pending"
-			}
-			]
+			}],
+			"Components": [{
+				"Matnr": "4133",
+				"Description": "Torque Wrench",
+				"ReqQty": "1",
+				"StockQty": "12",
+				"UsedQty": ""
+			}]
 		}, {
 			"Id": "Ord3",
 			"Equipment": "789656",
@@ -80,7 +94,14 @@
 			"WorkCntr": "WA410",
 			"Status": "Open",
 			"RootCause": "Planned maintenance",
-			"Operations": []
+			"Operations": [],
+			"Components": [{
+				"Matnr": "86546",
+				"Description": "Sealant Glue",
+				"ReqQty": "1",
+				"StockQty": "3",
+				"UsedQty": ""
+			}]
 		}
 
 	]

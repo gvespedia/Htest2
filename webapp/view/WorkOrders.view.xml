@@ -111,7 +111,39 @@
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter icon="sap-icon://wrench" text="Components">
-								<Text text="Notes go here ..."/>
+								<Table id="componentsTable" inset="false" items="{ path: 'Components' }">
+									<headerToolbar>
+										<Toolbar>
+											<content>
+												<Title text="Components" level="H2"/>
+											</content>
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column minScreenWidth="Tablet" demandPopin="true">
+											<Text text="Component"/>
+										</Column>
+										<Column minScreenWidth="Desktop" demandPopin="true">
+											<Text text="Req. Qty"/>
+										</Column>
+										<Column minScreenWidth="Desktop" demandPopin="true">
+											<Text text="Stock Qty"/>
+										</Column>
+										<Column>
+											<Text text="Used Qty"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<ObjectIdentifier title="{Description}" text="{Matnr}"/>
+												<Text text="{ReqQty}"/>
+												<Text text="{StockQty}"/>
+												<MaskInput value="{UsedQty}" mask="9999" placeholderSymbol=" "></MaskInput>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter icon="sap-icon://machine" text="Equipment">
