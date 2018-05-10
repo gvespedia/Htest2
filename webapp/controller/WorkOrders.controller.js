@@ -45,11 +45,11 @@ sap.ui.define([
 				subtitle: "",
 				counter: 1
 			}];
-			
+
 			this._mModel = new JSONModel();
 			this._mModel.setData(aMessages);
 			this._oMessagePopover.setModel(this._mModel);
-			
+
 		},
 
 		onListSelectionChange: function(oEvent) {
@@ -79,13 +79,36 @@ sap.ui.define([
 		handleMessagePopoverPress: function(oEvent) {
 			this._oMessagePopover.toggle(oEvent.getSource());
 		},
-		
+
 		performSafetyCheck: function(evt) {
-		   this._safetyCheck = true;	
+			this._oMessagePopover.destroyItems();
+			this._oMessagePopover.close();
+			this._safetyCheck = true;
+			this.getView().byId("popoverButton").setText("");
+			this.getView().byId("popoverButton").setVisible(false);
+			sap.m.MessageToast.show("Safety measures check successful");
 		},
-		
+
 		onStart: function() {
-			
+			var selItem = this.getView().byId("masterList").getSelectedItems();
+			if (selItem.length < 1) {
+				sap.m.MessageToast.show("Select an order");
+			} else if (!this._safetyCheck) {
+				sap.m.MessageBox.error(
+					"You have not yet performed the safety measures check. \n" +
+					"Perform the check to start working on orders.", {
+						actions: ["Perform Check", sap.m.MessageBox.Action.CLOSE],
+						styleClass: "sapUiSizeCompact",
+						onClose: function(sAction) {
+							if (sAction === "Perform Check") {
+								this.performSafetyCheck();
+							}
+						}.bind(this)
+					}
+				);
+			} else {
+				sap.m.MessageToast.show("Order started");
+			}
 		}
 
 	});

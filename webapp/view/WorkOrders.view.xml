@@ -5,7 +5,7 @@
 		<detailPages>
 			<Page id="detail" title="Details" class="sapUiStdPage">
 				<headerContent>
-					<Button icon="sap-icon://message-popup" text="1" type="Emphasized"
+					<Button id="popoverButton" icon="sap-icon://message-popup" text="1" type="Emphasized"
 						press="handleMessagePopoverPress"/>
 				</headerContent>
 				<content>
