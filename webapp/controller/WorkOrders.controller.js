@@ -5,13 +5,19 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/vk/ContentResource"
+	"sap/ui/vk/ContentResource",
+	"sap/suite/ui/commons/networkgraph/layout/LayeredLayout",
+	"sap/suite/ui/commons/networkgraph/layout/ForceBasedLayout",
+	"sap/suite/ui/commons/networkgraph/ActionButton",
+	"sap/suite/ui/commons/networkgraph/Node",
+	"sap/suite/ui/commons/library"
 ], function(jQuery, MessageToast, Fragment, Controller, Filter, JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.gv.hackathon.Hackathon5.controller.WorkOrders", {
 		_safetyCheck: false,
 		_viewerContentResource: null,
+		STARTING_PROFILE: "9878787",
 		onInit: function() {
 			this._woModel = new sap.ui.model.json.JSONModel("mockData/WOmasterList.json");
 			this._woModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
