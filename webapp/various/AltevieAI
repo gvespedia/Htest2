@@ -1,0 +1,8 @@
+#
+#Fri May 11 13:06:21 UTC 2018
+Name=AltevieAI
+URL=http\://alteviedatascience.westeurope.cloudapp.azure.com\:5000
+ProxyType=Internet
+Type=HTTP
+Authentication=NoAuthentication
+Description=Check Safety

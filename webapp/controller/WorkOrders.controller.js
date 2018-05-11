@@ -5,13 +5,14 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
 	"sap/ui/model/json/JSONModel",
+	"com/gv/hackathon/Hackathon5/model/service/AICheckService",
 	"sap/ui/vk/ContentResource",
 	"sap/suite/ui/commons/networkgraph/layout/LayeredLayout",
 	"sap/suite/ui/commons/networkgraph/layout/ForceBasedLayout",
 	"sap/suite/ui/commons/networkgraph/ActionButton",
 	"sap/suite/ui/commons/networkgraph/Node",
 	"sap/suite/ui/commons/library"
-], function(jQuery, MessageToast, Fragment, Controller, Filter, JSONModel) {
+], function(jQuery, MessageToast, Fragment, Controller, Filter, JSONModel, aiCheck) {
 	"use strict";
 
 	return Controller.extend("com.gv.hackathon.Hackathon5.controller.WorkOrders", {
@@ -232,12 +233,40 @@ sap.ui.define([
 		},
 
 		performSafetyCheck: function(evt) {
-			this._oMessagePopover.destroyItems();
+			this.aiCheckServiceCall();
+			/*this._oMessagePopover.destroyItems();
 			this._oMessagePopover.close();
 			this._safetyCheck = true;
 			this.getView().byId("popoverButton").setText("");
 			this.getView().byId("popoverButton").setVisible(false);
-			sap.m.MessageToast.show("Safety measures check successful");
+			sap.m.MessageToast.show("Safety measures check successful");*/
+		},
+		_checkResult: "false",
+		aiCheckServiceCall: function() {
+			var success = function(oData) {
+				if (oData.hasOwnProperty("ai_check")) {
+					if (oData.ai_check === "true") {
+						this._oMessagePopover.destroyItems();
+						this._oMessagePopover.close();
+						this._safetyCheck = true;
+						this.getView().byId("popoverButton").setText("");
+						this.getView().byId("popoverButton").setVisible(false);
+						sap.m.MessageToast.show("Safety measures check successful");
+					} else if (oData.ai_check === "false") {
+						this._checkResult = "true";
+						sap.m.MessageBox.error("The safety measures check failed. \n" +
+							"Plase wear the required equipment and repeat the check.");
+					}
+				} else {
+					sap.m.MessageBox.error("There was an issue with the safety check. \n" +
+						"Please try again in a few minutes.");
+				}
+			}.bind(this);
+			var error = function(err) {
+				//console.log(err);
+			}.bind(this);
+
+			aiCheck.AICheckService.safetyMeasuresCheck(this._checkResult, success, error);
 		},
 
 		//  END Manage Safety Check Message
@@ -327,7 +356,6 @@ sap.ui.define([
 
 		onTabSelectChanged: function(oEvent) {
 			var key = oEvent.getParameters().key;
-			debugger;
 			if (key === "viewer") {
 				this.loadModelIntoViewer();
 			}
