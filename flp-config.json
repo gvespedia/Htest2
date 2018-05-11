@@ -2,6 +2,7 @@
     "application": {
         "id": "",
         "title": "com.gv.hackathon.Hackathon5.Hackathon5",
+        "description": "Hackathon test",
         "type": "SAP_UI5_Component",
         "componentUrl": "/",
         "appUrl": "#Hackathon5-Display",
@@ -22,9 +23,9 @@
     },
     "tile": {
         "type": "StaticTile",
-        "title": "Hackathon5",
+        "title": "Hackathon5 Test",
         "subtitle": "Subtitle",
-        "searchKeywords": "Hackathon5,Subtitle",
+        "searchKeywords": "Hackathon5 Test,Subtitle",
         "displayIconUrl": "sap-icon://approvals",
         "displayInfoText": "",
         "size": "1x1",

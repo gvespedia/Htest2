@@ -193,6 +193,9 @@ sap.ui.define([
 				this.manageViewer(vdsFile);
 				var graph = this._woModel.getProperty(sPath).Graph;
 				this.manageNetworkGraph(graph);
+				if (this._woModel.getProperty(sPath).hasOwnProperty("Image")) {
+					this.manageThumbnail(this._woModel.getProperty(sPath).Image);
+				}
 			} else {
 				this._viewerContentResource = null;
 				this.manageDetailToolbar("None");
@@ -505,7 +508,7 @@ sap.ui.define([
 		///////////////////////////
 
 		///////////////////////////
-		//	IconTab Numbers
+		//	Various Details
 
 		manageTabNumbers: function(sPath) {
 			var selItem = this._woModel.getProperty(sPath);
@@ -519,9 +522,18 @@ sap.ui.define([
 			this.getView().byId("tasksTab").setCount(tasksCount);
 			this.getView().byId("componentsTab").setCount(componentsCount);
 			this.getView().byId("attachmentTab").setCount(attachmentCount);
+		},
+
+		manageThumbnail: function(image) {
+			var oh = this.byId("orderHeader");
+			if (image.length > 0) {
+				oh.setIcon(image);
+			} else {
+				oh.setIcon("sap-icon://machine");
+			}
 		}
 
-		//	END IconTab Numbers
+		//	END Various Details
 		///////////////////////////
 	});
 });
