@@ -20,7 +20,7 @@
 					</ObjectHeader>
 					<IconTabBar id="iconTabBar" expanded="false" class="sapUiResponsiveContentPadding">
 						<items>
-							<IconTabFilter key="info" icon="sap-icon://hint" text="Info">
+							<IconTabFilter id="infoTab" key="info" icon="sap-icon://hint" text="Info">
 								<VBox>
 									<f:Form id="infoForm" editable="false">
 										<f:title>
@@ -75,7 +75,7 @@
 								</VBox>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter key="tasks" icon="sap-icon://task" text="Tasks">
+							<IconTabFilter id="tasksTab" key="tasks" icon="sap-icon://task" text="Tasks">
 								<Table id="operationsTable" inset="false" items="{ path: 'Operations' }">
 									<headerToolbar>
 										<Toolbar>
@@ -111,7 +111,7 @@
 								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter key="components" icon="sap-icon://wrench" text="Components">
+							<IconTabFilter id="componentsTab" key="components" icon="sap-icon://wrench" text="Components">
 								<Table id="componentsTable" inset="false" items="{ path: 'Components' }">
 									<headerToolbar>
 										<Toolbar>
@@ -147,7 +147,7 @@
 								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter key="equipment" icon="sap-icon://machine" text="Equipment">
+							<IconTabFilter id="locationTab" key="location" icon="sap-icon://machine" text="Location">
 								<MessageStrip id="graphMessageStrip" text="No graph file available for this equipment" type="Information" showIcon="true"/>
 								<ng:Graph orientation="TopBottom" id="graph" layout="Layered" searchSuggest="suggest" search="search" nodes="{/nodes}" lines="{/lines}">
 									<ng:layoutAlgorithm>
@@ -181,7 +181,7 @@
 								</ng:Graph>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
-							<IconTabFilter key="viewer" icon="sap-icon://attachment" text="Attachment">
+							<IconTabFilter id="attachmentTab" key="viewer" icon="sap-icon://attachment" text="Attachment">
 								<MessageStrip id="vdsMessageStrip" text="No vds file available for this equipment" type="Information" showIcon="true"/>
 								<vk:Viewer id="viewer" toolbarTitle="3D Viewer" width="100%" height="600px"></vk:Viewer>
 							</IconTabFilter>

@@ -87,7 +87,8 @@
 			"WorkCntr": "WA410",
 			"Status": "Open",
 			"RootCause": "Wear and tear",
-			"Operations": []
+			"Operations": [],
+			"Components": []
 		}, {
 			"Id": "Ord4",
 			"Equipment": "789656",

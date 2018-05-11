@@ -76,6 +76,7 @@ sap.ui.define([
 			//  Manage Visibility
 
 			this.byId("viewer").setVisible(false);
+			this.byId("viewer").setShowSceneTree(false);
 			this.manageDetailToolbar("None");
 
 			//  END Manage Visibility
@@ -87,7 +88,7 @@ sap.ui.define([
 
 			this._sTopParent = this.STARTING_PROFILE;
 			this._mExplored = [this._sTopParent];
-this._graph = this.getView().byId("graph");
+			this._graph = this.getView().byId("graph");
 
 			this._graph.attachEvent("beforeLayouting", function(oEvent) {
 				// nodes are not rendered yet (bOutput === false) so their invalidation triggers parent (graph) invalidation
@@ -201,6 +202,8 @@ this._graph = this.getView().byId("graph");
 			if (key === "viewer") {
 				this.loadModelIntoViewer();
 			}
+
+			this.manageTabNumbers(sPath);
 		},
 
 		priorityFormatter: function(prior) {
@@ -343,7 +346,6 @@ this._graph = this.getView().byId("graph");
 		//	Network Graph 
 
 		manageNetworkGraph: function(name) {
-			debugger;
 			if (name.length > 0) {
 				this.byId("graph").setVisible(true);
 				this.byId("graphMessageStrip").setVisible(false);
@@ -469,10 +471,29 @@ this._graph = this.getView().byId("graph");
 
 		linePress: function(oEvent) {
 			oEvent.bPreventDefault = true;
-		}
+		},
 
 		//	END Network Graph 
 		///////////////////////////
 
+		///////////////////////////
+		//	IconTab Numbers
+
+		manageTabNumbers: function(sPath) {
+			var selItem = this._woModel.getProperty(sPath);
+
+			var tasksCount = selItem.Operations.length;
+			tasksCount = tasksCount > 0 ? tasksCount + "" : "";
+			var componentsCount = selItem.Components.length;
+			componentsCount = componentsCount > 0 ? componentsCount + "" : "";
+			var attachmentCount = selItem.Vds.length;
+			attachmentCount = attachmentCount > 0 ? "1" : "";
+			this.getView().byId("tasksTab").setCount(tasksCount);
+			this.getView().byId("componentsTab").setCount(componentsCount);
+			this.getView().byId("attachmentTab").setCount(attachmentCount);
+		}
+
+		//	END IconTab Numbers
+		///////////////////////////
 	});
 });
