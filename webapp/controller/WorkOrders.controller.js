@@ -76,7 +76,6 @@ sap.ui.define([
 			//  Manage Visibility
 
 			this.byId("viewer").setVisible(false);
-			this.byId("viewer").setShowSceneTree(false);
 			this.manageDetailToolbar("None");
 
 			//  END Manage Visibility
@@ -328,6 +327,7 @@ sap.ui.define([
 
 		onTabSelectChanged: function(oEvent) {
 			var key = oEvent.getParameters().key;
+			debugger;
 			if (key === "viewer") {
 				this.loadModelIntoViewer();
 			}

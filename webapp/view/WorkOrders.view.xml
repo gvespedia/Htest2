@@ -18,7 +18,7 @@
 							<ObjectAttribute text="Expected Start Date: {ExpectedStartDate}"/>
 						</attributes>
 					</ObjectHeader>
-					<IconTabBar id="iconTabBar" expanded="false" class="sapUiResponsiveContentPadding">
+					<IconTabBar id="iconTabBar" expanded="false" class="sapUiResponsiveContentPadding" select="onTabSelectChanged">
 						<items>
 							<IconTabFilter id="infoTab" key="info" icon="sap-icon://hint" text="Info">
 								<VBox>
