@@ -19,15 +19,26 @@ sap.ui.define([
 		_safetyCheck: false,
 		_viewerContentResource: null,
 		STARTING_PROFILE: "9878787",
+		_lastEqui: "",
 
 		onInit: function() {
 
 			///////////////////////////
 			//  Setup WorkOrders model
 
-			this._woModel = new sap.ui.model.json.JSONModel("mockData/WOmasterList.json");
+			/*this._woModel = new sap.ui.model.json.JSONModel("mockData/WOmasterList.json");
 			this._woModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
-			this.getView().setModel(this._woModel);
+			this.getView().setModel(this._woModel);*/
+
+			//  END Setup WorkOrders model
+			///////////////////////////
+
+			///////////////////////////
+			//  Setup OData model
+
+			this._odModel = new sap.ui.model.odata.v2.ODataModel("Z_PM_GW_SERVICE_SRV");
+			this._odModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+			this.getView().setModel(this._oModel);
 
 			//  END Setup WorkOrders model
 			///////////////////////////
@@ -179,14 +190,74 @@ sap.ui.define([
 			var infoForm = this.byId("infoForm");
 			infoForm.bindElement(sPath);
 			var taskTab = this.byId("operationsTable");
-			taskTab.bindElement(sPath);
+			var oTemplate = new sap.m.ColumnListItem({
+				type: sap.m.ListType.Inactive,
+				cells: [
+					new sap.m.ObjectIdentifier({
+						title: "{Description}",
+						text: "{Activity}"
+					}),
+					new sap.m.Label({
+						text: "{DurationNormal}"
+					}),
+					new sap.m.Label({
+						text: "{WorkForecast}"
+					}),
+					new sap.m.Label({
+						text: "{SystemStatusText}"
+					})
+				]
+			});
+			taskTab.bindAggregation("items", sPath + "/GetOperations", oTemplate);
+
 			var componentsTab = this.byId("componentsTable");
-			componentsTab.bindElement(sPath);
+			var cTemplate = new sap.m.ColumnListItem({
+				type: sap.m.ListType.Inactive,
+				cells: [
+					new sap.m.ObjectIdentifier({
+						title: "{MatlDesc}",
+						text: "{Material}"
+					}),
+					new sap.m.Label({
+						text: "{OriginalUom}"
+					}),
+					new sap.m.Label({
+						text: "{RequirementQuantity}"
+					}),
+					new sap.m.Label({
+						text: "100"
+					}),
+					new sap.m.MaskInput({
+						mask: "999999"
+					})
+				]
+			});
+			componentsTab.bindAggregation("items", sPath + "/GetComponents", cTemplate);
 
 			var viewer = this.byId("viewer");
 			viewer.destroyContentResources();
 
-			if (sPath !== "") {
+			this.getView().getModel().read(sPath, {
+				success: function(oData) {
+					var equi = oData.Equipment;
+					if (equi !== this._lastEqui) {
+						this.manageViewer(equi);
+						this.manageThumbnail(equi);
+						this.manageNetworkGraph(equi);
+					} else {
+						this._lastEqui = equi;
+					}
+				}.bind(this),
+				error: function(oError) {
+					console.log("Error", oError);
+				}
+			});
+			/*var equi = this._odModel.getProperty(sPath).Equipment;
+			debugger;
+			this.manageViewer(equi);
+			this.manageThumbnail(equi);
+			this.manageNetworkGraph(equi);*/
+			/*if (sPath !== "") {
 				var status = this._woModel.getProperty(sPath).Status;
 				this.manageDetailToolbar(status);
 				var vdsFile = this._woModel.getProperty(sPath).Vds;
@@ -199,7 +270,7 @@ sap.ui.define([
 			} else {
 				this._viewerContentResource = null;
 				this.manageDetailToolbar("None");
-			}
+			}*/
 
 			var key = this.byId("iconTabBar").getSelectedKey();
 			if (key === "viewer") {
@@ -340,12 +411,13 @@ sap.ui.define([
 		///////////////////////////
 		//	3D Viewer
 
-		manageViewer: function(file) {
-			if (file !== "") {
+		manageViewer: function(equnr) {
+			debugger;
+			if (equnr === "10000185") {
 				this.byId("viewer").setVisible(true);
 				this.byId("vdsMessageStrip").setVisible(false);
 				this._viewerContentResource = new sap.ui.vk.ContentResource({
-					source: "mockData/vds/" + file,
+					source: "mockData/vds/" + "raspberry_pi_3_b_plus.vds",
 					sourceType: "vds",
 					sourceId: "abc"
 
@@ -376,11 +448,11 @@ sap.ui.define([
 		///////////////////////////
 		//	Network Graph 
 
-		manageNetworkGraph: function(name) {
-			if (name.length > 0) {
+		manageNetworkGraph: function(equnr) {
+			if (equnr === "10000185") {
 				this.byId("graph").setVisible(true);
 				this.byId("graphMessageStrip").setVisible(false);
-				this._oModel = new sap.ui.model.json.JSONModel("mockData/" + name);
+				this._oModel = new sap.ui.model.json.JSONModel("mockData/" + "graph.json");
 				this._oModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 				this._graph.setModel(this._oModel);
 				this._setFilter();
@@ -511,7 +583,7 @@ sap.ui.define([
 		//	Various Details
 
 		manageTabNumbers: function(sPath) {
-			var selItem = this._woModel.getProperty(sPath);
+			/*var selItem = this._woModel.getProperty(sPath);
 
 			var tasksCount = selItem.Operations.length;
 			tasksCount = tasksCount > 0 ? tasksCount + "" : "";
@@ -521,13 +593,13 @@ sap.ui.define([
 			attachmentCount = attachmentCount > 0 ? "1" : "";
 			this.getView().byId("tasksTab").setCount(tasksCount);
 			this.getView().byId("componentsTab").setCount(componentsCount);
-			this.getView().byId("attachmentTab").setCount(attachmentCount);
+			this.getView().byId("attachmentTab").setCount(attachmentCount);*/
 		},
 
-		manageThumbnail: function(image) {
+		manageThumbnail: function(equnr) {
 			var oh = this.byId("orderHeader");
-			if (image.length > 0) {
-				oh.setIcon(image);
+			if (equnr === "10000185") {
+				oh.setIcon("mockData/images/raspberry_pi.jpg");
 			} else {
 				oh.setIcon("sap-icon://machine");
 			}

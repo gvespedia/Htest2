@@ -1,29 +1,41 @@
 {
-	"welcomeFile": "/webapp/index.html",
-	"routes": [{
-		"path": "/resources",
-		"target": {
-			"type": "service",
-			"name": "sapui5",
-			"entryPath": "/resources"
-		},
-		"description": "SAPUI5 Resources"
-	}, {
-		"path": "/test-resources",
-		"target": {
-			"type": "service",
-			"name": "sapui5",
-			"entryPath": "/test-resources"
-		},
-		"description": "SAPUI5 Test Resources"
-	}, {
-		"path": "/aiCheck",
-		"target": {
-			"type": "destination",
-			"name": "AltevieAI",
-			"preferLocal": true
-		}
-
-	}],
-	"sendWelcomeFileRedirect": true
+  "welcomeFile": "/webapp/index.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/aiCheck",
+      "target": {
+        "type": "destination",
+        "name": "AltevieAI",
+        "preferLocal": true
+      }
+    },
+    {
+      "path": "/sap/opu/odata",
+      "target": {
+        "type": "destination",
+        "name": "S4_HANA_ESPEDIA",
+        "entryPath": "/sap/opu/odata"
+      },
+      "description": "S4_HANA_ESPEDIA"
+    }
+  ],
+  "sendWelcomeFileRedirect": true
 }

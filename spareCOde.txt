@@ -34,3 +34,8 @@ items="{ path: '/ProductCollection', sorter: { path: 'Activity' } }"
 									
 									
 	xmlns:ng="sap.suite.ui.commons.networkgraph" xmlns:l="sap.ui.layout" xmlns:layout="sap.suite.ui.commons.networkgraph.layout"
+	
+	
+	state="{ path: 'Priority', formatter: '.priorityFormatter' }"
+	
+	 xmlns:vk="sap.ui.vk"

@@ -9,13 +9,14 @@
 					<Button id="popoverButton" icon="sap-icon://message-popup" text="1" type="Emphasized" press="handleMessagePopoverPress"/>
 				</headerContent>
 				<content>
-					<ObjectHeader id="orderHeader" icon="sap-icon://machine" iconDensityAware="false" iconAlt="{Id}" title="{Id}" number="{Equipment}">
+					<ObjectHeader id="orderHeader" icon="sap-icon://machine" iconDensityAware="false" iconAlt="{Orderid}" title="{Orderid} - {ShortText}"
+						number="{Equipment}">
 						<statuses>
-							<ObjectStatus text="Priority: { path: 'Priority' }" state="{ path: 'Priority', formatter: '.priorityFormatter' }"/>
+							<ObjectStatus text="Priority: { path: 'PrioDesc' }"/>
 						</statuses>
 						<attributes>
-							<ObjectAttribute text="Requested By: {RequestedBy}"/>
-							<ObjectAttribute text="Expected Start Date: {ExpectedStartDate}"/>
+							<ObjectAttribute text="Requested By: {EnteredBy}"/>
+							<ObjectAttribute text="Expected Start Date: {StartDate}"/>
 						</attributes>
 					</ObjectHeader>
 					<IconTabBar id="iconTabBar" expanded="false" class="sapUiResponsiveContentPadding" select="onTabSelectChanged">
@@ -35,22 +36,27 @@
 												<f:formElements>
 													<f:FormElement label="Requested by">
 														<f:fields>
-															<Text text="{RequestedBy}"/>
+															<Text text="{EnteredBy}"/>
 														</f:fields>
 													</f:FormElement>
 													<f:FormElement label="Requested date">
 														<f:fields>
-															<Text text="{RequestDate}"/>
+															<Text text="{EnterDate}"/>
 														</f:fields>
 													</f:FormElement>
 													<f:FormElement label="Expected start date">
 														<f:fields>
-															<Text text="{ExpectedStartDate}"/>
+															<Text text="{StartDate}"/>
 														</f:fields>
 													</f:FormElement>
 													<f:FormElement label="Expected conclusion date">
 														<f:fields>
-															<Text text="{ExpectedEndDate}"/>
+															<Text text="{FinishDate}"/>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement label="Status">
+														<f:fields>
+															<Text text="{SStatus}"/>
 														</f:fields>
 													</f:FormElement>
 													<f:FormElement label="Work center">
@@ -58,14 +64,14 @@
 															<Text text="{WorkCntr}"/>
 														</f:fields>
 													</f:FormElement>
-													<f:FormElement label="Status">
+													<f:FormElement label="Cost Center">
 														<f:fields>
-															<Text text="{Status}"/>
+															<Text text="{Costcenter}"/>
 														</f:fields>
 													</f:FormElement>
-													<f:FormElement label="Root cause">
+													<f:FormElement label="Maintenance Plant">
 														<f:fields>
-															<Text text="{RootCause}"/>
+															<Text text="{Maintplant}"/>
 														</f:fields>
 													</f:FormElement>
 												</f:formElements>
@@ -76,7 +82,7 @@
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter id="tasksTab" key="tasks" icon="sap-icon://task" text="Tasks">
-								<Table id="operationsTable" inset="false" items="{ path: 'Operations' }">
+								<Table id="operationsTable" inset="false">
 									<headerToolbar>
 										<Toolbar>
 											<content>
@@ -98,21 +104,11 @@
 											<Text text="Status"/>
 										</Column>
 									</columns>
-									<items>
-										<ColumnListItem>
-											<cells>
-												<ObjectIdentifier title="{Description}" text="{Activity}"/>
-												<Text text="{EstimatedHours}"/>
-												<Text text="{ActualHours}"/>
-												<Text text="{OperationStatus}"/>
-											</cells>
-										</ColumnListItem>
-									</items>
 								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
 							<IconTabFilter id="componentsTab" key="components" icon="sap-icon://wrench" text="Components">
-								<Table id="componentsTable" inset="false" items="{ path: 'Components' }">
+								<Table id="componentsTable" inset="false">
 									<headerToolbar>
 										<Toolbar>
 											<content>
@@ -124,26 +120,19 @@
 										<Column minScreenWidth="Tablet" demandPopin="true">
 											<Text text="Component"/>
 										</Column>
-										<Column minScreenWidth="Desktop" demandPopin="true">
+										<Column minScreenWidth="Desktop" demandPopin="true" vAlign="Middle">
+											<Text text="Unit"/>
+										</Column>
+										<Column minScreenWidth="Desktop" demandPopin="true" vAlign="Middle">
 											<Text text="Req. Qty"/>
 										</Column>
-										<Column minScreenWidth="Desktop" demandPopin="true">
+										<Column minScreenWidth="Desktop" demandPopin="true" vAlign="Middle">
 											<Text text="Stock Qty"/>
 										</Column>
-										<Column>
+										<Column vAlign="Middle">
 											<Text text="Used Qty"/>
 										</Column>
 									</columns>
-									<items>
-										<ColumnListItem>
-											<cells>
-												<ObjectIdentifier title="{Description}" text="{Matnr}"/>
-												<Text text="{ReqQty}"/>
-												<Text text="{StockQty}"/>
-												<MaskInput value="{UsedQty}" mask="9999" placeholderSymbol=" "></MaskInput>
-											</cells>
-										</ColumnListItem>
-									</items>
 								</Table>
 							</IconTabFilter>
 							<IconTabSeparator icon=""/>
@@ -202,16 +191,16 @@
 		<masterPages>
 			<Page id="master" title="Work Orders" class="sapUiStdPage">
 				<content>
-					<List id="masterList" items="{/WorkOrders}" mode="SingleSelectMaster" selectionChange="onListSelectionChange">
+					<List id="masterList" items="{/OrderSet}" mode="SingleSelectMaster" selectionChange="onListSelectionChange">
 						<items>
-							<ObjectListItem title="{Id}" number="{Equipment}">
+							<ObjectListItem title="{Orderid}" number="{Equipment}">
 								<firstStatus>
-									<ObjectStatus text="{ path: 'Priority' }" state="{ path: 'Priority', formatter: '.priorityFormatter' }"/>
+									<ObjectStatus text="{ path: 'PrioDesc' }"/>
 								</firstStatus>
 								<attributes>
-									<ObjectAttribute text="{RequestDate}"/>
-									<ObjectAttribute text="Type: {Type}"/>
-									<ObjectAttribute text="Status: {Status}"/>
+									<ObjectAttribute text="{EnterDate}"/>
+									<ObjectAttribute text="Type: {OrderType}"/>
+									<ObjectAttribute text="Status: {SStatus}"/>
 								</attributes>
 							</ObjectListItem>
 						</items>
